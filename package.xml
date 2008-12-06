@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd  http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfApplyPlugin</name>
+ <channel>pear.symfony-project.com</channel>
+ <summary>Allows users to apply for accounts</summary>
+ <description>Allows users of a site protected by sfGuardPlugin to create new accounts, verifying them by email. Both account creation and password changes require email verification as a speed bump to slow down spammers.</description>
+ <lead>
+  <name>Tom Boutell</name>
+  <user>boutell</user>
+  <email>tom@punkave.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-12-06</date>
+ <time>16:09:13</time>
+ <version>
+  <release>0.5.1</release>
+  <api>0.5.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.symfony-project.com/license">MIT license</license>
+ <notes>-</notes>
+ <contents>
+  <dir name="/">
+   <file md5sum="699b1c8578ea9c533292efa5375b8078" name="modules/sfApply/actions/actions.class.php" role="data" />
+   <file md5sum="7f95c9ae2a3507ae62b4190de11b206e" name="modules/sfApply/config/mailer.yml" role="data" />
+   <file md5sum="b8a38b2627416150ce3d9cca15de12ab" name="modules/sfApply/config/security.yml" role="data" />
+   <file md5sum="5349f79a813ba6fc82cc4f01951af09f" name="modules/sfApply/lib/BasesfApplyActions.class.php" role="data" />
+   <file md5sum="3239d1990f27d416b87372fff2a5f091" name="modules/sfApply/templates/applyAfter.php" role="data" />
+   <file md5sum="45b22a0fcad76361d1f73c911dfcbf23" name="modules/sfApply/templates/applySuccess.php" role="data" />
+   <file md5sum="edeb4204d8c780d63a0a7c79f0dfef15" name="modules/sfApply/templates/confirmInvalid.php" role="data" />
+   <file md5sum="8fda63379fb0aa52c739ee02ec78f2a0" name="modules/sfApply/templates/confirmSuccess.php" role="data" />
+   <file md5sum="034a7398b9a6333437e47bd5511b93e0" name="modules/sfApply/templates/resetAfter.php" role="data" />
+   <file md5sum="d3d627c3f6a55bed66fce9945703a501" name="modules/sfApply/templates/resetRequestAfter.php" role="data" />
+   <file md5sum="f0f83ef4a08ccb00c702a7ddf4f6382f" name="modules/sfApply/templates/resetRequestSuccess.php" role="data" />
+   <file md5sum="a303aa2aba39bdb53de928f581291093" name="modules/sfApply/templates/resetSuccess.php" role="data" />
+   <file md5sum="083a851a1fac63311413de5469b1c06e" name="modules/sfApply/templates/sendValidateNew.php" role="data" />
+   <file md5sum="2670e3897734c6d81dffeecdcfa388aa" name="modules/sfApply/templates/sendValidateReset.php" role="data" />
+   <file md5sum="2b540dbb8553eda1d3b71fd813088b5c" name="modules/sfApply/templates/settingsSuccess.php" role="data" />
+   <file md5sum="98cd0eae81abcff142935a73183842ff" name="modules/sfApply/validate/apply.yml" role="data" />
+   <file md5sum="4a4659d17cae0e3252a019ab085fcea0" name="modules/sfApply/validate/reset.yml" role="data" />
+   <file md5sum="81c1ab6543ee22bf0d8170f4d29114e9" name="modules/sfApply/validate/settings.yml" role="data" />
+   <file md5sum="515a8cd657e9935ded61deb7ff913840" name="LICENSE" role="data" />
+   <file md5sum="8f0dfc252c045afdd9d01fa3d34e00f8" name="README" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.0.0</min>
+    <max>1.1.0</max>
+    <exclude>1.1.0</exclude>
+   </package>
+   <package>
+    <name>sfGuardPlugin</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.1.15</min>
+    <max>2.0.0</max>
+    <exclude>2.0.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog />
+</package>

@@ -1,0 +1,201 @@
+sfApply plugin
+==============
+
+Most public sites have similar needs where user registration is
+concerned. In order to slow down spam a little bit and get a grip
+on who's doing what, you want users to apply for accounts and 
+confirm them by clicking on a link in an email message. 
+
+Symfony's sfGuardPlugin does a fine job managing the accounts you 
+already have but doesn't provide a built-way for users to apply for and
+create accounts. sfApply adds that capability.
+
+sfApplyPlugin also implements a password reset feature that works
+correctly and also requires users to confirm via email. This prevents a 
+user who has discovered a momentarily unattended PC from 
+taking over the account too easily.
+
+Requirements
+============
+
+You need:
+
+* sfGuardPlugin
+
+* Propel
+
+A Symfony 1.2-plus-Doctrine version of this plugin will
+follow shortly.
+
+Installation
+============
+
+Read the sfGuardPlugin documentation first! Set up that plugin before
+continuing.
+
+Then add the following to your `schema.yml`:
+
+    propel:
+      sf_guard_user_profile:
+        _attributes:
+          phpName: sfGuardUserProfile
+        user_id:
+          type: integer
+          foreignTable: sf_guard_user
+          foreignReference: id
+          required: true
+          onDelete: cascade
+        email:
+          type: varchar(80)
+          index: yes
+        fullname:
+          type: varchar(80)
+         validate:
+          type: varchar(17)
+          index: yes
+
+Note that sfApplyPlugin takes advantage of the "user profile"
+functionality offered by sfGuardPlugin as a place to store
+additional information. While sfGuardPlugin makes the name of the
+profile class configurable, sfApplyPlugin simply uses the
+default name (sfGuardUserProfile) for simplicity.
+
+"But where do I put my own additional fields?" That's why I didn't
+build sfGuardUserProfile's schema directly into the plugin. Just
+add your additional fields after the full name field.
+
+"Shouldn't there be yet another profile class for my stuff?" In theory,
+that might be nice. In practice, before you know it you'll be joining 
+28 tables every time someone accesses the page. Paste this one
+snippet of code just once instead.
+
+You will also want to add the following routes to your `config/routing.yml`.
+The URLs are just suggestions, you can change them if you don't like them.
+Note that this plugin provides a working solution for users who have 
+forgotten their passwords. Mapping the `sf_guard_password` route to 
+`sfApply/reset-request` allows the "forgot your password?" link in
+the default sfGuardPlugin login form to work.
+
+    apply:
+      url:  /apply
+      param: { module: sfApply, action: apply }
+
+    reset:
+      url: /reset
+      param: { module: sfApply, action: reset }
+
+    resetRequest:
+      url: /reset-request
+      param: { module: sfApply, action: resetRequest }
+
+    validate:
+      url: /confirm/:validate
+      param: { module: sfApply, action: confirm }
+
+    settings:
+      url: /settings
+      param: { module: sfApply, action: settings }
+
+    # We implement the missing sf_guard_password feature from sfGuardPlugin
+    sf_guard_password:
+      url: /reset-request
+      param: { module: sfApply, action: resetRequest }
+
+If you have enabled the built-in routes in sfGuardPlugin, 
+then overriding `sf_guard_password` here might not work. You can
+fix that by copying `sfGuardPlugin/modules/sfGuardAuth/templates/loginSuccess.php`
+to your application and editing the "forgot your password?" link to
+point to `sfApply/resetRequest` instead.
+
+Activate the `sfApply` module in your application's
+`settings.yml` file:
+
+    enabled_modules:        [default, sfGuardAuth, sfApply]
+
+Note that you also need the `sfGuardAuth` module to enable logins.
+
+Now you can easily add a button to your pages sending users to
+`sfApply/apply` to request accounts:
+
+    echo button_to("Create Account", "sfApply/apply");
+
+You will almost certainly also want to copy 
+sfGuardPlugin's `modules/sfGuardAuth/templates/signinSuccess.php` to
+your own application's modules folder and add a "Create Account"
+link to it, so that users understand they can make accounts 
+of their own at what would otherwise be the most frustrating point 
+in your application.
+
+Customizing Emails
+==================
+
+sfApply sends out email messages inviting users to verify their
+accounts or reset their passwords. You can customize these by
+copying `modules/sfApply/templates/sendValidateNew.php` and
+`modules/sfApply/templates/sendValidateReset.php` from the plugin to
+your application and editing them. The default emails aren't
+that bad; they do contain the name of your site. But you really ought 
+to customize these so that users get a warm, fuzzy, personal sense that the
+messages are not spam. 
+
+If you want to send HTML emails, you should create separate
+plaintext versions named `sendValidateNew.altbody.php` and 
+`sendValidateReset.altbody.php` for plain text. When Symfony sees these, 
+it will automatically expect HTML in `sendValdiateNew.php` and 
+`sendValidateReset.php`.
+
+This approach to email is not supported in Symfony 1.2. I'll be
+looking at alternate solutions for 1.2.
+
+Extending sfApply
+=================
+
+"But I need the user's birthdate!" Of course you do. Every application
+needs something extra. Here's how to go about it:
+
+1. Add your extra fields to `sfGuardUserProfile` in your
+  `schema.yml`.
+2. Create a `modules/sfApply/templates` folder in your application.
+3. Copy my `applySuccess.php` and `settingsSuccess.php` files over.
+4. Add the form fields you need for your additional information
+  to those templates. 
+5. Copy `sfApplyPlugin/modules/sfApply/actions/actions.class.php` to
+  your own `modules/sfApply/actions` folder. Notice that this class is
+  initially empty. That's because it inherits its default
+  behavior from 
+  `sfApplyPlugin/modules/sfApply/lib/BasesfApplyActions.class.php`.
+6. Extend the `populateProfileSettings` method to save
+  additional information to the profile when an account
+  is first created:
+        function populateProfileSettings($profile)
+        {
+          $birthday = $this->getRequestParameter('birthday');
+          $profile->setBirthday($birthday);
+          // Don't forget to call the parent class version!
+          return parent::populateProfileSettings($profile);
+        }
+7. Extend `updateProfileSettings` in exactly the same way. The
+difference is that `updateProfileSettings` is called when the
+user edits their settings later, while `populateProfileSettings`
+is called only the first time. If your needs in both situations
+are similar, I suggest that you keep the shared code in a private method
+that you call from both.
+8. Optionally override `validateApply` and `validateSettings` as well.
+Again, be sure to call the parent class versions before
+returning and return false if the parent class version
+returns false.
+
+Credits
+=======
+
+sfApplyPlugin was written by Tom Boutell. He can be contacted
+at [tom@punkave.com](mailto:tom@punkave.com). See also [www.punkave.com](http://www.punkave.com/) and 
+[www.boutell.com](http://www.boutell.com/) for
+further information about his work.
+
+Changelog
+=========
+
+Version 0.51 corrects Markdown errors in the documentation. There
+are no code changes.
+

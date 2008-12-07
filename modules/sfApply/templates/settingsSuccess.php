@@ -1,8 +1,9 @@
 <?php use_helper('Validation') ?>
-<?php echo form_tag('sfApply/settings', array('name' => 'sfApplySettings', 'id' => 'sfApplySettings')) ?>
-<div class="apply_row">
+<h2 class="sf_apply_heading">Account Settings</h2>
+<?php echo form_tag('sfApply/settings', array('name' => 'sf_apply_settings', 'id' => 'sf_apply_settings')) ?>
+<div class="sf_apply_row">
 <label for="fullname">Full Name: </label>
-<div class="apply_row_content">
+<div class="sf_apply_row_content">
 <?php echo form_error('fullname') ?>
 <?php echo input_tag('fullname', $sf_user->getGuardUser()->getProfile()->getFullname()) ?>
 </div>
@@ -10,7 +11,7 @@
 <?php echo submit_tag('Save') ?> 
 <?php echo button_to('Cancel', '@homepage') ?>
 </form>
-<?php echo form_tag('sfApply/resetRequest', array('name' => 'sfApplyResetRequest', 'id' => 'sfApplyResetRequest')) ?>
+<?php echo form_tag('sfApply/resetRequest', array('name' => 'sf_apply_reset_request', 'id' => 'sf_apply_reset_request')) ?>
 <p>
 Click the button below to change your password. For security reasons, you 
 will receive a confirmation email containing a link allowing you to complete 

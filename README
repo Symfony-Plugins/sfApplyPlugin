@@ -1,5 +1,4 @@
-sfApply plugin
-==============
+# sfApply plugin #
 
 Most public sites have similar needs where user registration is
 concerned. In order to slow down spam a little bit and get a grip
@@ -15,8 +14,7 @@ correctly and also requires users to confirm via email. This prevents a
 user who has discovered a momentarily unattended PC from 
 taking over the account too easily.
 
-Requirements
-============
+## Requirements ##
 
 You need:
 
@@ -27,8 +25,7 @@ You need:
 A Symfony 1.2-plus-Doctrine version of this plugin will
 follow shortly.
 
-Installation
-============
+## Installation ##
 
 Read the sfGuardPlugin documentation first! Set up that plugin before
 continuing.
@@ -126,8 +123,7 @@ link to it, so that users understand they can make accounts
 of their own at what would otherwise be the most frustrating point 
 in your application.
 
-Customizing Emails
-==================
+## Customizing Emails ##
 
 sfApply sends out email messages inviting users to verify their
 accounts or reset their passwords. You can customize these by
@@ -147,8 +143,38 @@ it will automatically expect HTML in `sendValdiateNew.php` and
 This approach to email is not supported in Symfony 1.2. I'll be
 looking at alternate solutions for 1.2.
 
-Extending sfApply
-=================
+## Displaying Login and Logout Prompts on Every Page ##
+
+You probably have pages on which logging in is optional. It's nice to
+display a login prompt directly on these pages. If you want to do that,
+try including my login/logout prompt template from your
+`apps/frontend/templates/layout.php` file:
+
+    <?php include_partial('sfApply/login') ?>
+
+If you are using the provided stylesheet, the login prompt will
+be floated at the far right, so you'll want to emit this code
+before anything that should appear to the left of the prompt.
+
+When the user is already logged in, the login prompt is 
+automatically replaced by a logout prompt.
+
+## Using the Suggested Stylesheet ##
+
+sfApply comes with a stylesheet. You don't have to use it. If you do,
+you'll get reasonable styles for the sfApply pages as well as a
+reasonably good-looking style for the sfGuardPlugin login page. 
+
+If you wish to use my stylesheet directly, first make sure you have a 
+symbolic link from `web/sfApplyPlugin` to `plugins/sfApplyPlugin/web`. Then add
+the stylesheet to your view.yml file:
+
+      stylesheets:    [main, /sfApplyPlugin/css/login-apply]
+
+In the long run, you'll probably want to borrow from it rather than
+using it directly.
+
+## Extending sfApply ##
 
 "But I need the user's birthdate!" Of course you do. Every application
 needs something extra. Here's how to go about it:
@@ -167,6 +193,7 @@ needs something extra. Here's how to go about it:
 6. Extend the `populateProfileSettings` method to save
   additional information to the profile when an account
   is first created:
+
         function populateProfileSettings($profile)
         {
           $birthday = $this->getRequestParameter('birthday');
@@ -174,6 +201,7 @@ needs something extra. Here's how to go about it:
           // Don't forget to call the parent class version!
           return parent::populateProfileSettings($profile);
         }
+
 7. Extend `updateProfileSettings` in exactly the same way. The
 difference is that `updateProfileSettings` is called when the
 user edits their settings later, while `populateProfileSettings`
@@ -185,17 +213,32 @@ Again, be sure to call the parent class versions before
 returning and return false if the parent class version
 returns false.
 
-Credits
-=======
+## Credits ##
 
 sfApplyPlugin was written by Tom Boutell. He can be contacted
 at [tom@punkave.com](mailto:tom@punkave.com). See also [www.punkave.com](http://www.punkave.com/) and 
 [www.boutell.com](http://www.boutell.com/) for
 further information about his work.
 
-Changelog
-=========
+## Changelog ##
 
-Version 0.51 corrects Markdown errors in the documentation. There
-are no code changes.
+### Version 0.6 ###
+
+Version 0.6 adds the optional sfApply/_login.php template, which provides
+an easy way to insert a login prompt on every page. I realized I was
+using this code in two sites and that others would likely want to 
+do the same thing. Just include it in your layout template.
+
+Version 0.6 also adds a suggested stylesheet. Use it or not as you
+see fit. In addition to styling the apply and reset pages, it also
+styles the standard sfGuardUser login page. 
+
+Version 0.6 renames all of the CSS classes and ids emitted by sfApplyPlugin
+in order to avoid potential conflicts with your own CSS elements.
+
+### Version 0.53 ###
+
+Version 0.53 corrected Markdown errors in the documentation. There
+were no code changes from version 0.5, which was the first 
+public release.
 

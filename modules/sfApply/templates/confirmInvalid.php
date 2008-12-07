@@ -1,4 +1,4 @@
-<div class="apply-notice">
+<div class="sf_apply_notice">
 <p>
 That confirmation code is invalid. 
 </p>

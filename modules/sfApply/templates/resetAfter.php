@@ -1,4 +1,4 @@
-<div class="apply-notice">
+<div class="sf_apply_notice">
 <p>
 Your password has been successfully reset. You are now logged
 in to this site. In the future, be sure to log in with your new password.

@@ -1,4 +1,4 @@
-<div class="apply-notice">
+<div class="sf_apply_notice">
 <p>
 For security reasons, a confirmation message has been sent to 
 the email address associated with this account. Please check your

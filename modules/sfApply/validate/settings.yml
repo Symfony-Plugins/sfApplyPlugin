@@ -1,7 +1,7 @@
 fillin:
   enabled: true
   param:
-    name: sfApplySettings
+    name: sf_apply_settings
 
 fields:
   fullname:

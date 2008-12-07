@@ -1,7 +1,7 @@
 fillin:
   enabled: true
   param:
-    name: sfApplyApply
+    name: sf_apply_apply
 
 fields:
   username:

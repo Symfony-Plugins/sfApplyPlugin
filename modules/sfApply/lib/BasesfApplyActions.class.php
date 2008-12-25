@@ -143,7 +143,13 @@ class BasesfApplyActions extends sfActions
   public function executeConfirm()
   {
     $validate = $this->getRequestParameter('validate');
-    $sfGuardUser = sfGuardUserProfilePeer::retrieveUserByValidate($validate);
+    $c = new Criteria();
+    // 0.6.3: oops, this was in sfGuardUserProfilePeer in my application
+    // and therefore never got shipped with the plugin until I built
+    // a second site and spotted it!
+    $c->add(sfGuardUserProfilePeer::VALIDATE, $validate);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $sfGuardUser = sfGuardUserPeer::doSelectOne($c);
     if (!$sfGuardUser)
     {
       return 'Invalid';

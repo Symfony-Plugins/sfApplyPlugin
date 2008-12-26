@@ -27,10 +27,10 @@ follow shortly.
 
 ## Installation ##
 
-1. Read the sfGuardPlugin documentation first! Set up that plugin before
+Read the sfGuardPlugin documentation first! Set up that plugin before
 continuing.
 
-2. Then add the following to your `schema.yml`:
+Then add the following to your `schema.yml`:
 
     propel:
       sf_guard_user_profile:
@@ -66,7 +66,7 @@ that might be nice. In practice, before you know it you'll be joining
 28 tables every time someone accesses the page. Paste this one
 snippet of code just once instead.
 
-3. You will also want to add the following routes to your `config/routing.yml`.
+You will also want to add the following routes to your `config/routing.yml`.
 The URLs are just suggestions, you can change them if you don't like them.
 Note that this plugin provides a working solution for users who have 
 forgotten their passwords. Mapping the `sf_guard_password` route to 
@@ -104,14 +104,14 @@ fix that by copying `sfGuardPlugin/modules/sfGuardAuth/templates/loginSuccess.ph
 to your application and editing the "forgot your password?" link to
 point to `sfApply/resetRequest` instead.
 
-4. Activate the `sfApply` module in your application's
+Activate the `sfApply` module in your application's
 `settings.yml` file:
 
     enabled_modules:        [default, sfGuardAuth, sfApply]
 
 Note that you also need the `sfGuardAuth` module to enable logins.
 
-5. Configure the "from" address and full name for email messages sent by
+Configure the "from" address and full name for email messages sent by
 sfApplyPlugin in your `app.yml` file:
 
       sfApplyPlugin:
@@ -125,7 +125,7 @@ options! The plugin will fail with a less than informative error message
 My apologies for leaving this rather important information out of the
 documentation of the earliest versions.
 
-6. Now you can easily add a button to your pages sending users to
+Now you can easily add a button to your pages sending users to
 `sfApply/apply` to request accounts:
 
     echo button_to("Create Account", "sfApply/apply");
@@ -238,10 +238,12 @@ further information about his work.
 
 ### Version 0.6 ###
 
-Version 0.61 corrects a documentation bug: I neglected to mention
+Version 0.62 corrects a documentation bug: I neglected to mention
 the importance of configuring the "from" address for emails sent
 by sfApplyPlugin. If you do not do so the account confirmation and
-password reset email messages will never be sent. See step 5 above.
+password reset email messages will never be sent. See above.
+
+Version 0.61 had a minor markdown problem with the README.
 
 Version 0.6 adds the optional sfApply/_login.php template, which provides
 an easy way to insert a login prompt on every page. I realized I was

@@ -236,14 +236,26 @@ further information about his work.
 
 ## Changelog ##
 
-### Version 0.6 ###
+### Version 0.63 ###
+
+Version 0.63 corrects a significant oversight: earlier versions
+relied on sfGuardProfilePeer::retrieveUserByValidate() which
+existed only in my application. I discovered this problem when
+I employed the plugin a second application. This has
+been fixed.
+
+### Version 0.62 ###
 
 Version 0.62 corrects a documentation bug: I neglected to mention
 the importance of configuring the "from" address for emails sent
 by sfApplyPlugin. If you do not do so the account confirmation and
 password reset email messages will never be sent. See above.
 
+### Version 0.61 ###
+
 Version 0.61 had a minor markdown problem with the README.
+
+### Version 0.60 ###
 
 Version 0.6 adds the optional sfApply/_login.php template, which provides
 an easy way to insert a login prompt on every page. I realized I was

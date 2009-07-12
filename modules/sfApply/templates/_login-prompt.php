@@ -1,3 +1,4 @@
+<?php use_helper('Form', 'Validation') ?>
 <?php echo form_tag('@sf_guard_signin',
   array('name' => 'sf_guard_signin', 'id' => 'sf_guard_signin')) ?>
 
